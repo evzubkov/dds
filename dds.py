@@ -5,6 +5,7 @@ class Dds():
 
     def __init__(self, fd, freq, signal_width, init_phase=0, dc=True):
         
+        self.dc = dc
         self.gen_table(signal_width)
         self.set_freq(fd, freq, init_phase)
         
@@ -56,5 +57,8 @@ class Dds():
 
         if self.acc >= (2**self.signal_width - 1):
             self.acc -= (2**self.signal_width - 1)
+
+        if self.dc:
+            sample = sample + 2**(self.signal_width-1)
 
         return sample
